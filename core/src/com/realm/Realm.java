@@ -29,6 +29,7 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 		tiledMap = new TmxMapLoader().load("Maptest.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		Gdx.input.setInputProcessor(this);
+		//ji
 	}
 
 	@Override
