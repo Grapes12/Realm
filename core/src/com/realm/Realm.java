@@ -29,7 +29,6 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 		tiledMap = new TmxMapLoader().load("Maptest.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		Gdx.input.setInputProcessor(this);
-		//ji
 	}
 
 	@Override
@@ -37,6 +36,17 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			camera.translate(-32,0);
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			camera.translate(32,0);
+		if(Gdx.input.isKeyPressed(Input.Keys.UP))
+			camera.translate(0,32);
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+			camera.translate(0,-32);
+
+
+
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
@@ -44,23 +54,15 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if(keycode == Input.Keys.NUM_1)
+			tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
+		if(keycode == Input.Keys.NUM_2)
+			tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if(keycode == Input.Keys.LEFT)
-			camera.translate(-32,0);
-		if(keycode == Input.Keys.RIGHT)
-			camera.translate(32,0);
-		if(keycode == Input.Keys.UP)
-			camera.translate(0,32);
-		if(keycode == Input.Keys.DOWN)
-			camera.translate(0,-32);
-		if(keycode == Input.Keys.NUM_1)
-			tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
-		if(keycode == Input.Keys.NUM_2)
-			tiledMap.getLayers().get(1).setVisible(!tiledMap.getLayers().get(1).isVisible());
 		return false;
 	}
 
