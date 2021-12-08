@@ -19,7 +19,7 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 	Texture img;
 	TiledMap tiledMap;
 	OrthographicCamera camera;
-	TiledMapRenderer tiledMapRenderer;
+	Map tiledMapRenderer;
 
 	SpriteBatch sb;
 	Sprite sprite;
@@ -36,12 +36,13 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 
 		camera.update();
 		tiledMap = new TmxMapLoader().load("Maptest.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-		Gdx.input.setInputProcessor(this);
+		tiledMapRenderer = new Map(tiledMap);
 
 		sb = new SpriteBatch();
 		sprite = new Sprite(new Texture(Gdx.files.internal("vishnu.jpg")));
 		sprite.setSize(64, 64);
+
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
