@@ -39,7 +39,7 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 		tiledMapRenderer = new Map(tiledMap);
 
 		sb = new SpriteBatch();
-		sprite = new Sprite(new Texture(Gdx.files.internal("vishnu.jpg")));
+		sprite = new Sprite(new Texture("vishnu.jpg"));
 		sprite.setSize(64, 64);
 
 		Gdx.input.setInputProcessor(this);
