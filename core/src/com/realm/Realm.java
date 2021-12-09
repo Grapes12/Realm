@@ -29,7 +29,7 @@ public class Realm extends ApplicationAdapter implements InputProcessor {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 
-
+// hi
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, w, h);
