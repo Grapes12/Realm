@@ -2,6 +2,7 @@ package com.realm;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ public class mainGameScreen implements Screen {
     private TextureRegion[] animationFrames;
     private Animation animation;
     private float elapsedTime;
+
 
     public mainGameScreen(Realm realm){
         this.realm = realm;
@@ -95,6 +97,7 @@ public class mainGameScreen implements Screen {
         realm.camera.update();
         realm.hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         realm.hudCamera.position.set(realm.hudCamera.viewportWidth / 2.0f, realm.hudCamera.viewportHeight / 2.0f, 1.0f);
+        realm.hudCamera.update();
     }
     @Override
     public void resize(int width, int height) {

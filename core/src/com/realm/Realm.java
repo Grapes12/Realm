@@ -3,6 +3,7 @@ package com.realm;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,12 +24,10 @@ public class Realm extends Game {
 	SpriteBatch sb;BitmapFont font;
 	ShapeRenderer shapeRenderer;
 
-
 	inputControl Control;
 	gameState game;
 
-
-
+	Music m;
 
 
 
@@ -46,19 +45,27 @@ public class Realm extends Game {
 
 		hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		hudCamera.position.set(hudCamera.viewportWidth / 2.0f, hudCamera.viewportHeight / 2.0f, 1.0f);
+		hudCamera.update();
 
 		sb = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 
+
+
 		setScreen(new mainGameScreen(this));
+
+		m = Gdx.audio.newMusic(Gdx.files.internal("m2.ogg"));
+		m.setVolume(300f);
+		m.play();
 	}
 
 	@Override
-	public void dispose() { // SpriteBatches and Textures must always be disposed
+	public void dispose() {
 		sb.dispose();
 		shapeRenderer.dispose();
 		font.dispose();
+		m.dispose();
 	}
 
 

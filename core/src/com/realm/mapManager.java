@@ -1,10 +1,6 @@
 package com.realm;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -18,7 +14,7 @@ public class mapManager {
     public mapManager() {
 
         maps.add(new Map(new TmxMapLoader().load("Maptest.tmx")));
-        maps.add(new Map(new TmxMapLoader().load("roguelike-pack/Map/sample_map.tmx")));
+        maps.add(new Map(new TmxMapLoader().load("pack/Map/sample_map.tmx")));
         currentMap = 0;
         renderer = new OrthogonalTiledMapRenderer(maps.get(currentMap).getTiledMap());
 
