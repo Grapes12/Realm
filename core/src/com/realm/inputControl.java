@@ -9,16 +9,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntSet;
 
-public class InputControl extends InputAdapter implements InputProcessor {
-    private float w, h;
+public class inputControl extends InputAdapter implements InputProcessor {
+
     private OrthographicCamera camera;
 
     public final IntSet downKeys = new IntSet(20);
 
-    public InputControl(float w, float h, OrthographicCamera camera){
-        this.w = w;
-        this.h = h;
-        this.camera = camera;
+    public inputControl(){
+
     }
     @Override
     public boolean keyDown(int keycode) {

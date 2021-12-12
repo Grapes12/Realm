@@ -1,22 +1,25 @@
 package com.realm;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import java.util.ArrayList;
+public class Map {
+    private int width, height;
+    private TiledMap TiledMap;
 
-public class Map extends OrthogonalTiledMapRenderer {
-
-    public Map(TiledMap map) {
-        super(map);
-
+    public Map(TiledMap TiledMap){
+        this.TiledMap = TiledMap;
+        MapProperties p = TiledMap.getProperties();
+        width = (p.get("width", Integer.class) * p.get("tilewidth", Integer.class));
+        height = (p.get("height", Integer.class) * p.get("tileheight", Integer.class));
     }
-
-    public void addSprite(Sprite sprite){
-
+    public TiledMap getTiledMap(){
+        return TiledMap;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 }
