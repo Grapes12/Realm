@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 
+import static com.realm.inputControl.scroll;
+
 public class mainGameScreen implements Screen {
     private Realm realm;
 
@@ -22,7 +24,6 @@ public class mainGameScreen implements Screen {
     private float elapsedTime;
     private Music m;
 
-    mainGameScreenInputControl Control;
 
 
 
@@ -34,8 +35,7 @@ public class mainGameScreen implements Screen {
         loadCameras();
         loadAnimations();
         loadMusic();
-        Control = new mainGameScreenInputControl(realm, this);
-        Gdx.input.setInputProcessor(Control);
+
     }
     public void loadCameras(){
         MapProperties p = realm.game.getMapManager().getCurrentMap().getTiledMap().getProperties();
@@ -84,7 +84,7 @@ public class mainGameScreen implements Screen {
 		}
 		*/
         elapsedTime += Gdx.graphics.getDeltaTime();
-        realm.game.updateGame(Control.downKeys);
+        realm.game.updateGame(realm.Control.downKeys);
 
         updateCamera();
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -123,8 +123,9 @@ public class mainGameScreen implements Screen {
     }
     public void updateCamera(){
         MapProperties p = realm.game.getMapManager().getCurrentMap().getTiledMap().getProperties();
-
         camera.setToOrtho(false,p.get("tilewidth", Integer.class) * 20 * realm.aspectRatio, p.get("tileheight", Integer.class) * 20f );
+        camera.zoom += scroll * 0.1f;
+        scroll = 0;
         camera.update();
         hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         hudCamera.position.set(hudCamera.viewportWidth / 2.0f, hudCamera.viewportHeight / 2.0f, 1.0f);

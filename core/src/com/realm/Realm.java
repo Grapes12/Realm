@@ -27,6 +27,7 @@ public class Realm extends Game {
 	ShapeRenderer shapeRenderer;
 
 	AssetManager manager;
+	inputControl Control;
 
 	gameState game;
 
@@ -42,7 +43,8 @@ public class Realm extends Game {
 
 		game = new gameState();
 
-
+		Control = new inputControl();
+		Gdx.input.setInputProcessor(Control);
 
 		sb = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();

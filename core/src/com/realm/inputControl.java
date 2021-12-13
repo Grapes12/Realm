@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntSet;
 
-public class mainGameScreenInputControl extends InputAdapter implements InputProcessor {
+public class inputControl extends InputAdapter implements InputProcessor {
 
-    public final IntSet downKeys = new IntSet(20);
-    private mainGameScreen screen;
-    private Realm realm;
-    public mainGameScreenInputControl(Realm realm, mainGameScreen screen){
-        this.screen = screen;
-        this.realm = realm;
+    public static final IntSet downKeys = new IntSet(20);
+    public static int scroll = 0;
+    public inputControl(){
+
     }
     @Override
     public boolean keyDown(int keycode) {
@@ -53,9 +51,7 @@ public class mainGameScreenInputControl extends InputAdapter implements InputPro
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        System.out.println("YEET");
-        screen.camera.zoom += amountY * 0.1f;
-        screen.camera.update();
+        scroll = (int) amountY;
         return true;
     }
 
