@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntSet;
 
-public class inputControl extends InputAdapter implements InputProcessor {
+public class mainGameScreenInputControl extends InputAdapter implements InputProcessor {
 
     public final IntSet downKeys = new IntSet(20);
     private mainGameScreen screen;
     private Realm realm;
-    public inputControl(Realm realm, mainGameScreen screen){
+    public mainGameScreenInputControl(Realm realm, mainGameScreen screen){
         this.screen = screen;
         this.realm = realm;
     }

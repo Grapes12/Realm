@@ -22,7 +22,7 @@ public class mainGameScreen implements Screen {
     private float elapsedTime;
     private Music m;
 
-    inputControl Control;
+    mainGameScreenInputControl Control;
 
 
 
@@ -34,7 +34,7 @@ public class mainGameScreen implements Screen {
         loadCameras();
         loadAnimations();
         loadMusic();
-        Control = new inputControl(realm, this);
+        Control = new mainGameScreenInputControl(realm, this);
         Gdx.input.setInputProcessor(Control);
     }
     public void loadCameras(){
@@ -114,7 +114,7 @@ public class mainGameScreen implements Screen {
         realm.sb.setProjectionMatrix(hudCamera.combined);
         realm.sb.begin();
 
-        realm.font.draw(realm.sb, "FPS=" + Gdx.graphics.getFramesPerSecond(), 0, hudCamera.viewportHeight - 5);
+        realm.font.draw(realm.sb, "FPS=" + Gdx.graphics.getFramesPerSecond() + "   MAXIMIZE THE WINDOW TO MAKE IT LOOK NICE  ZOOMM", 0, hudCamera.viewportHeight - 5);
 
         realm.sb.end();
 
@@ -152,6 +152,5 @@ public class mainGameScreen implements Screen {
     @Override
     public void dispose() {
         m.dispose();
-
     }
 }

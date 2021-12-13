@@ -40,8 +40,6 @@ public class Realm extends Game {
 		aspectRatio = 1920f/1017f;
 
 
-
-
 		game = new gameState();
 
 
