@@ -3,6 +3,7 @@ package com.realm;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,46 +19,42 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Realm extends Game {
 	float aspectRatio;
-	OrthographicCamera camera;
-	OrthographicCamera hudCamera;
 
-	SpriteBatch sb;BitmapFont font;
+
+
+	SpriteBatch sb;
+	BitmapFont font;
 	ShapeRenderer shapeRenderer;
 
-	inputControl Control;
+	AssetManager manager;
+
 	gameState game;
 
-	Music m;
+	mainGameScreen mgs;
 
 
 
 	@Override
 	public void create () {
 		aspectRatio = (float)Gdx.graphics.getWidth() / (float)Gdx.graphics.getHeight();
+		aspectRatio = 1920f/1017f;
+
+
+
+
 		game = new gameState();
-		Control = new inputControl();
-		Gdx.input.setInputProcessor(Control);
 
 
-		MapProperties p = game.getMapManager().getCurrentMap().getTiledMap().getProperties();
-		camera = new OrthographicCamera(p.get("tilewidth", Integer.class) * 20 * aspectRatio, p.get("tileheight", Integer.class) * 20 );
-		camera.update();
-
-		hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		hudCamera.position.set(hudCamera.viewportWidth / 2.0f, hudCamera.viewportHeight / 2.0f, 1.0f);
-		hudCamera.update();
 
 		sb = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 
+		manager = new AssetManager();
 
+		mgs = new mainGameScreen(this);
+		setScreen(mgs);
 
-		setScreen(new mainGameScreen(this));
-
-		m = Gdx.audio.newMusic(Gdx.files.internal("m2.ogg"));
-		m.setVolume(300f);
-		m.play();
 	}
 
 	@Override
@@ -65,7 +62,6 @@ public class Realm extends Game {
 		sb.dispose();
 		shapeRenderer.dispose();
 		font.dispose();
-		m.dispose();
 	}
 
 

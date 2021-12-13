@@ -12,12 +12,9 @@ public class mapManager {
     private OrthogonalTiledMapRenderer renderer;
 
     public mapManager() {
-
         maps.add(new Map(new TmxMapLoader().load("Maptest.tmx")));
-        maps.add(new Map(new TmxMapLoader().load("pack/Map/sample_map.tmx")));
         currentMap = 0;
         renderer = new OrthogonalTiledMapRenderer(maps.get(currentMap).getTiledMap());
-
     }
     public void setCurrentMap(int currentMap){
         this.currentMap = currentMap;

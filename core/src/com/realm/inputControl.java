@@ -1,9 +1,6 @@
 package com.realm;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -11,20 +8,18 @@ import com.badlogic.gdx.utils.IntSet;
 
 public class inputControl extends InputAdapter implements InputProcessor {
 
-    private OrthographicCamera camera;
-
     public final IntSet downKeys = new IntSet(20);
-
-    public inputControl(){
-
+    private mainGameScreen screen;
+    private Realm realm;
+    public inputControl(Realm realm, mainGameScreen screen){
+        this.screen = screen;
+        this.realm = realm;
     }
     @Override
     public boolean keyDown(int keycode) {
         downKeys.add(keycode);
         return true;
     }
-
-
     @Override
     public boolean keyUp(int keycode) {
         downKeys.remove(keycode);
@@ -58,7 +53,10 @@ public class inputControl extends InputAdapter implements InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        return false;
+        System.out.println("YEET");
+        screen.camera.zoom += amountY * 0.1f;
+        screen.camera.update();
+        return true;
     }
 
 }

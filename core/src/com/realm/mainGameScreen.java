@@ -13,15 +13,43 @@ import com.badlogic.gdx.maps.MapProperties;
 public class mainGameScreen implements Screen {
     private Realm realm;
 
+    OrthographicCamera camera;
+    OrthographicCamera hudCamera;
+
+
     private TextureRegion[] animationFrames;
     private Animation animation;
     private float elapsedTime;
+    private Music m;
+
+    inputControl Control;
+
+
 
 
     public mainGameScreen(Realm realm){
         this.realm = realm;
 
+
+        loadCameras();
         loadAnimations();
+        loadMusic();
+        Control = new inputControl(realm, this);
+        Gdx.input.setInputProcessor(Control);
+    }
+    public void loadCameras(){
+        MapProperties p = realm.game.getMapManager().getCurrentMap().getTiledMap().getProperties();
+        camera = new OrthographicCamera(p.get("tilewidth", Integer.class) * 20 * realm.aspectRatio, p.get("tileheight", Integer.class) * 20 );
+        camera.update();
+
+        hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        hudCamera.position.set(hudCamera.viewportWidth / 2.0f, hudCamera.viewportHeight / 2.0f, 1.0f);
+        hudCamera.update();
+    }
+    public void loadMusic(){
+        m = Gdx.audio.newMusic(Gdx.files.internal("m2.ogg"));
+        m.setLooping(true);
+        m.play();
     }
     public void loadAnimations(){
         TextureRegion[][] tmpFrames = TextureRegion.split(new Texture("FireAnimation.png"),64, 64);
@@ -56,52 +84,54 @@ public class mainGameScreen implements Screen {
 		}
 		*/
         elapsedTime += Gdx.graphics.getDeltaTime();
-        realm.game.updateGame(Gdx.graphics.getDeltaTime(), realm.Control.downKeys);
+        realm.game.updateGame(Control.downKeys);
+
         updateCamera();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        realm.camera.position.set(realm.game.getPlayer().getPosX(), realm.game.getPlayer().getPosY(), 0);
-        realm.camera.update();
+        camera.position.set(realm.game.getPlayer().getPosX(), realm.game.getPlayer().getPosY(), 0);
+        camera.update();
 
-        realm.game.getMapManager().getRenderer().setView(realm.camera);
+        realm.game.getMapManager().getRenderer().setView(camera);
         realm.game.getMapManager().getRenderer().render();
 
         TextureRegion cFrame = (TextureRegion) animation.getKeyFrame(elapsedTime,true);
 
         //draw with game camera
-        realm.sb.setProjectionMatrix(realm.camera.combined);
+        realm.sb.setProjectionMatrix(camera.combined);
         realm.sb.begin();
 
         realm.game.getPlayer().getSprite().draw(realm.sb);
-        realm.sb.draw(cFrame, realm.game.getPlayer().getPosX() - 32, realm.game.getPlayer().getPosY() - 48);
+        //animation
+        realm.sb.draw(cFrame, 100, 100);
 
         realm.sb.end();
 
         //draw with hud camera
-        realm.sb.setProjectionMatrix(realm.hudCamera.combined);
+        realm.sb.setProjectionMatrix(hudCamera.combined);
         realm.sb.begin();
 
-        realm.font.draw(realm.sb, "FPS=" + Gdx.graphics.getFramesPerSecond(), 0, realm.hudCamera.viewportHeight - 5);
+        realm.font.draw(realm.sb, "FPS=" + Gdx.graphics.getFramesPerSecond(), 0, hudCamera.viewportHeight - 5);
 
         realm.sb.end();
 
-        realm.hudCamera.update();
+        hudCamera.update();
 
     }
     public void updateCamera(){
         MapProperties p = realm.game.getMapManager().getCurrentMap().getTiledMap().getProperties();
-        realm.camera = new OrthographicCamera(p.get("tilewidth", Integer.class) * 20 * realm.aspectRatio, p.get("tileheight", Integer.class) * 20 );
-        realm.camera.update();
-        realm.hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        realm.hudCamera.position.set(realm.hudCamera.viewportWidth / 2.0f, realm.hudCamera.viewportHeight / 2.0f, 1.0f);
-        realm.hudCamera.update();
+
+        camera.setToOrtho(false,p.get("tilewidth", Integer.class) * 20 * realm.aspectRatio, p.get("tileheight", Integer.class) * 20f );
+        camera.update();
+        hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        hudCamera.position.set(hudCamera.viewportWidth / 2.0f, hudCamera.viewportHeight / 2.0f, 1.0f);
+        hudCamera.update();
     }
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
@@ -121,6 +151,7 @@ public class mainGameScreen implements Screen {
 
     @Override
     public void dispose() {
+        m.dispose();
 
     }
 }
